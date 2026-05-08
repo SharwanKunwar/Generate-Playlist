@@ -15,6 +15,13 @@ export const usePlaylistStore = create(
                 set((state) => ({
                     playlists: state.playlists.filter((p) => p.id !== id),
                 })),
+
+            updatePlaylist: (id, updates) =>
+                set((state) => ({
+                    playlists: state.playlists.map((playlist) =>
+                        playlist.id === id ? { ...playlist, ...updates } : playlist
+                    ),
+                })),
         }),
         {
             name: "playlist-storage",

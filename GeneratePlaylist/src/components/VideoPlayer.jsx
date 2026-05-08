@@ -1,5 +1,5 @@
 import YouTube from "react-youtube";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Card } from "antd";
 
 function VideoPlayer({ videoId, setDuration }) {
@@ -10,12 +10,18 @@ function VideoPlayer({ videoId, setDuration }) {
     setDuration(event.target.getDuration());
   };
 
-  window.seekTo = (time) => {
-    if (playerRef.current) {
-      playerRef.current.seekTo(time, true);
-      playerRef.current.playVideo();
-    }
-  };
+  useEffect(() => {
+    window.seekTo = (time) => {
+      if (playerRef.current) {
+        playerRef.current.seekTo(time, true);
+        playerRef.current.playVideo();
+      }
+    };
+
+    return () => {
+      delete window.seekTo;
+    };
+  }, []);
 
   return (
     <Card className="shadow-lg">

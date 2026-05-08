@@ -11,7 +11,7 @@ function DurationInput({ onChange }) {
     useEffect(() => {
         const total = hours * 60 + minutes;
         onChange && onChange(total);
-    }, [hours, minutes]);
+    }, [hours, minutes, onChange]);
 
     return (
         <Card
