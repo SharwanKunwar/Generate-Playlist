@@ -253,7 +253,7 @@ function HomePage() {
     return (
         <main className="shortconcept-shell">
             <aside className="playlist-panel">
-                <div className="brand-row">
+                <div className="brand-row ">
                     <div>
                         <p className="eyebrow">ShortConcept</p>
                         <h1>Segment playlist</h1>
@@ -428,7 +428,7 @@ function HomePage() {
                         </div>
                     </section>
 
-                    <section className="control-panel">
+                    <section className="control-panel h-[170px]">
                         <h3>Playback</h3>
                         <div className="speed-options">
                             {SPEEDS.map((option) => (
