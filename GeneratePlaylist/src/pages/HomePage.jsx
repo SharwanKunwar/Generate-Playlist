@@ -251,8 +251,8 @@ function HomePage() {
     }
 
     return (
-        <main className="shortconcept-shell">
-            <aside className="playlist-panel">
+        <main className="shortconcept-shell ">
+            <aside className="playlist-panel ">
                 <div className="brand-row ">
                     <div>
                         <p className="eyebrow">ShortConcept</p>
@@ -267,7 +267,7 @@ function HomePage() {
                     <small>{segmentCount} generated parts</small>
                 </div>
 
-                <div className="segment-list" aria-label="Generated segments">
+                <div className="segment-list " aria-label="Generated segments">
                     {segments.length === 0 ? (
                         <div className="empty-state">
                             Load a video and choose a split length to generate a playlist.
@@ -305,7 +305,7 @@ function HomePage() {
                         <p className="eyebrow">Long videos, cleaner study sessions</p>
                         <h2>Split YouTube or local videos into playable chapters.</h2>
                     </div>
-                    <div className="save-actions">
+                    <div className="save-actions ">
                         <button
                             className="ghost-button"
                             disabled={saveDisabled}
@@ -319,37 +319,108 @@ function HomePage() {
                         >
                             {saveButtonLabel}
                         </button>
-                        <span>{saveDisabled ? "Waiting for video segments" : status}</span>
+                        <span className=" pl-20">{saveDisabled ? "Waiting for video segments" : <p className="text-neutral-400 text-start">{status}</p>}</span>
                     </div>
                 </header>
 
-                <div className="player-frame">
-                    {sourceType === "youtube" && videoId ? (
-                        <YouTube
-                            className="youtube-player"
-                            iframeClassName="youtube-iframe"
-                            onReady={handleYoutubeReady}
-                            opts={{
-                                playerVars: { modestbranding: 1, rel: 0 },
-                            }}
-                            videoId={videoId}
-                        />
-                    ) : sourceType === "upload" && fileUrl ? (
-                        <video
-                            controls
-                            onLoadedMetadata={handleLocalMetadata}
-                            onTimeUpdate={handleLocalTimeUpdate}
-                            ref={localVideoRef}
-                            src={fileUrl}
-                        >
-                            <track kind="captions" />
-                        </video>
-                    ) : (
-                        <div className="player-placeholder">
-                            <strong>Load a video to begin</strong>
-                            <span>YouTube URLs and uploaded video files are supported.</span>
-                        </div>
-                    )}
+                <div className=" flex justify-center items-start">
+
+                    <div className="player-frame w-[65%]">
+
+                        {sourceType === "youtube" && videoId ? (
+                            <YouTube
+                                className="youtube-player"
+                                iframeClassName="youtube-iframe"
+                                onReady={handleYoutubeReady}
+                                opts={{
+                                    playerVars: { modestbranding: 1, rel: 0 },
+                                }}
+                                videoId={videoId}
+                            />
+
+                        ) : sourceType === "upload" && fileUrl ? (
+                            <video
+                                controls
+                                onLoadedMetadata={handleLocalMetadata}
+                                onTimeUpdate={handleLocalTimeUpdate}
+                                ref={localVideoRef}
+                                src={fileUrl}
+                            >
+                                <track kind="captions" />
+                            </video>
+                        ) : (
+                            <div className="player-placeholder">
+                                <strong>Load a video to begin</strong>
+                                <span>YouTube URLs and uploaded video files are supported.</span>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="flex flex-col gap-3 w-[35%] px-5">
+
+                        <section className="control-panel h-[170px] w-full">
+                            <h3>Playback</h3>
+                            <div className="speed-options">
+                                {SPEEDS.map((option) => (
+                                    <button
+                                        className={speed === option ? "selected" : ""}
+                                        key={option}
+                                        onClick={() => setSpeed(option)}
+                                        type="button"
+                                    >
+                                        {option}x
+                                    </button>
+                                ))}
+                            </div>
+                            <p className="text-sm">{status}</p>
+                        </section>
+
+                        <section className="control-panel">
+                            <div className="panel-title-row">
+                                <h3>Local playlists</h3>
+                                <span>{playlists.length}</span>
+                            </div>
+                            <div className="input-row compact">
+                                <input
+                                    onChange={(event) => setPlaylistName(event.target.value)}
+                                    placeholder="Playlist name"
+                                    type="text"
+                                    value={playlistName}
+                                />
+                                <button disabled={saveDisabled} onClick={savePlaylist} type="button">
+                                    {loadedPlaylistId ? "Update" : "Save"}
+                                </button>
+                            </div>
+                            <div className="saved-list">
+                                {playlists.length === 0 ? (
+                                    <span>No saved playlists yet</span>
+                                ) : (
+                                    playlists
+                                        .slice()
+                                        .reverse()
+                                        .map((playlist) => (
+                                            <div className="saved-item" key={playlist.id}>
+                                                <button onClick={() => loadSavedPlaylist(playlist)} type="button">
+                                                    <strong>{playlist.name}</strong>
+                                                    <small>
+                                                        {playlist.segments.length} parts · {playlist.sourceName}
+                                                    </small>
+                                                </button>
+                                                <button
+                                                    aria-label={`Delete ${playlist.name}`}
+                                                    className="delete-button"
+                                                    onClick={() => removePlaylist(playlist.id)}
+                                                    type="button"
+                                                >
+                                                    x
+                                                </button>
+                                            </div>
+                                        ))
+                                )}
+                            </div>
+                        </section>
+                    </div>
+
                 </div>
 
                 <div className="control-grid">
@@ -428,67 +499,7 @@ function HomePage() {
                         </div>
                     </section>
 
-                    <section className="control-panel h-[170px]">
-                        <h3>Playback</h3>
-                        <div className="speed-options">
-                            {SPEEDS.map((option) => (
-                                <button
-                                    className={speed === option ? "selected" : ""}
-                                    key={option}
-                                    onClick={() => setSpeed(option)}
-                                    type="button"
-                                >
-                                    {option}x
-                                </button>
-                            ))}
-                        </div>
-                        <p>{status}</p>
-                    </section>
 
-                    <section className="control-panel">
-                        <div className="panel-title-row">
-                            <h3>Local playlists</h3>
-                            <span>{playlists.length}</span>
-                        </div>
-                        <div className="input-row compact">
-                            <input
-                                onChange={(event) => setPlaylistName(event.target.value)}
-                                placeholder="Playlist name"
-                                type="text"
-                                value={playlistName}
-                            />
-                            <button disabled={saveDisabled} onClick={savePlaylist} type="button">
-                                {loadedPlaylistId ? "Update" : "Save"}
-                            </button>
-                        </div>
-                        <div className="saved-list">
-                            {playlists.length === 0 ? (
-                                <span>No saved playlists yet</span>
-                            ) : (
-                                playlists
-                                    .slice()
-                                    .reverse()
-                                    .map((playlist) => (
-                                        <div className="saved-item" key={playlist.id}>
-                                            <button onClick={() => loadSavedPlaylist(playlist)} type="button">
-                                                <strong>{playlist.name}</strong>
-                                                <small>
-                                                    {playlist.segments.length} parts · {playlist.sourceName}
-                                                </small>
-                                            </button>
-                                            <button
-                                                aria-label={`Delete ${playlist.name}`}
-                                                className="delete-button"
-                                                onClick={() => removePlaylist(playlist.id)}
-                                                type="button"
-                                            >
-                                                x
-                                            </button>
-                                        </div>
-                                    ))
-                            )}
-                        </div>
-                    </section>
                 </div>
             </section>
         </main>

@@ -195,6 +195,7 @@ h3 {
 }
 
 .segment-list {
+  max-height: 73vh;
   display: grid;
   align-content: start;
   gap: 10px;
