@@ -251,7 +251,7 @@ function HomePage() {
     }
 
     return (
-        <main className="shortconcept-shell ">
+        <main className="shortconcept-shell flex justify-center items-center">
             <aside className="playlist-panel ">
                 <div className="brand-row ">
                     <div>
@@ -299,7 +299,7 @@ function HomePage() {
                 </div>
             </aside>
 
-            <section className="workspace">
+            <section className="workspace flex justify-center">
                 <header className="topbar">
                     <div>
                         <p className="eyebrow">Long videos, cleaner study sessions</p>
