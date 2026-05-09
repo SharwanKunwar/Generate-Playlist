@@ -267,7 +267,7 @@ function HomePage() {
                     <small>{segmentCount} generated parts</small>
                 </div>
 
-                <div className="segment-list " aria-label="Generated segments">
+                <div className="segment-list " aria-label="Generated segments element">
                     {segments.length === 0 ? (
                         <div className="empty-state">
                             Load a video and choose a split length to generate a playlist.

@@ -511,3 +511,17 @@ input[type="number"] {
     min-height: 280px;
   }
 }
+
+/* // hide scrollbar  */
+
+.element {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+}
+
+.element::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Edge */
+}
