@@ -325,7 +325,7 @@ function HomePage() {
 
                 <div className=" flex justify-center items-start">
 
-                    <div className="player-frame w-[65%]">
+                    <div className="player-frame w-[50vw]">
 
                         {sourceType === "youtube" && videoId ? (
                             <YouTube
