@@ -210,9 +210,9 @@ function HomePage() {
         } else {
             addPlaylist(playlist);
             setLoadedPlaylistId(playlist.id);
+            setPlaylistName(""); // Clear the input field after creating a new playlist
         }
 
-        setPlaylistName(playlist.name);
         setStatus(
             `${playlist.name} saved with ${playlist.segments.length} parts. Find it in Local playlists.`,
         );
@@ -307,7 +307,7 @@ function HomePage() {
                     </div>
                     <div className="save-actions ">
                         <button
-                            className="ghost-button"
+                            className="ghost-button text-white"
                             disabled={saveDisabled}
                             onClick={savePlaylist}
                             title={
@@ -323,9 +323,9 @@ function HomePage() {
                     </div>
                 </header>
 
-                <div className=" flex justify-center items-start">
+                <div className=" flex justify-center items-start ">
 
-                    <div className="player-frame w-[50vw]">
+                    <div className="player-frame w-[50vw] ">
 
                         {sourceType === "youtube" && videoId ? (
                             <YouTube
