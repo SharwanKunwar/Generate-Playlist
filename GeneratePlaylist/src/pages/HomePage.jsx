@@ -306,26 +306,14 @@ function HomePage() {
                         <h2>Split YouTube or local videos into playable chapters.</h2>
                     </div>
                     <div className="save-actions ">
-                        <button
-                            className="ghost-button text-white"
-                            disabled={saveDisabled}
-                            onClick={savePlaylist}
-                            title={
-                                saveDisabled
-                                    ? "Load a video first so ShortConcept can generate segments."
-                                    : "Save this segment playlist in your browser."
-                            }
-                            type="button"
-                        >
-                            {saveButtonLabel}
-                        </button>
-                        <span className=" pl-20">{saveDisabled ? "Waiting for video segments" : <p className="text-neutral-400 text-start">{status}</p>}</span>
+
+                        <span className="mt-5 pl-20">{saveDisabled ? "Waiting for video segments" : <p className="text-neutral-400 text-start">{status}</p>}</span>
                     </div>
                 </header>
 
-                <div className=" flex justify-center items-start ">
+                <div className=" flex md:flex-row flex-col gap-5 justify-center items-start ">
 
-                    <div className="player-frame w-[50vw] ">
+                    <div className="player-frame md:w-[50vw] ">
 
                         {sourceType === "youtube" && videoId ? (
                             <YouTube
@@ -356,7 +344,7 @@ function HomePage() {
                         )}
                     </div>
 
-                    <div className="flex flex-col gap-3 w-[35%] px-5">
+                    <div className="flex flex-col gap-3 md:w-[35%] px-5 ">
 
                         <section className="control-panel h-[170px] w-full">
                             <h3>Playback</h3>
